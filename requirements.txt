@@ -1,0 +1,45 @@
+
+# Manipulation et analyse des donnees
+numpy
+pandas
+
+# Machine Learning et preprocessing
+scikit-learn
+joblib
+
+# Visualisation
+matplotlib
+seaborn
+plotly
+
+# Rapports Excel
+openpyxl
+
+# Jupyter Notebook
+jupyter
+ipykernel
+notebook
+
+# Detection de derive et monitoring MLOps
+evidently
+
+# API de prediction
+fastapi
+uvicorn
+python-multipart
+pydantic
+
+# Versionnement des donnees et modeles
+dvc[gdrive]
+
+# Requetes HTTP et tests
+requests
+pytest
+
+# Gestion des fichiers de configuration
+PyYAML
+python-dotenv
+
+# Connexion et gestion de la base de donnees MariaDB
+sqlalchemy
+pymysql
