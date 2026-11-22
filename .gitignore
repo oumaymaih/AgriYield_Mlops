@@ -1,0 +1,29 @@
+﻿# Configuration locale et secrets
+.env
+.env.*
+!.env.example
+
+# Environnements Python
+.venv/
+.venv_new/
+venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Fichiers temporaires
+arborescence.txt
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Donnees et modeles geres par DVC
+/data/
+/models/
+
+# Cache DVC
+.dvc/cache/
+.dvc/tmp/
