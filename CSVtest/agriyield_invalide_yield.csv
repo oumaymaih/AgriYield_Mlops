@@ -1,0 +1,4 @@
+Crop,Season,State,Crop_Year,Area,Annual_Rainfall,Fertilizer,Pesticide,Yield
+Rice,Kharif,Assam,2020,4.5,1100,120,2,2.6
+Wheat,Rabi,Punjab,2021,7.2,800,180,3,-2.85
+Maize,Kharif,Bihar,2022,6,950,160,2.8,3.1
