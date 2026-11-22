@@ -27,3 +27,7 @@ Thumbs.db
 # Cache DVC
 .dvc/cache/
 .dvc/tmp/
+
+
+# Arborescence locale du projet
+structure_projet.txt
