@@ -1,0 +1,6 @@
+﻿Ligne_CSV,Crop,Season,State,Crop_Year,Area,Annual_Rainfall,Fertilizer,Pesticide,Statut,Rendement_predit_t_ha,Motif
+2,Rice,Kharif,Assam,2020,150,1200,200,15,doublon,2.484037732341795,Observation déjà présente dans MariaDB. Aucun nouvel enregistrement.
+3,Wheat,Rabi,Punjab,2021,180,850,175,12,acceptee,3.1256375215913614,
+4,Maize,Kharif,Karnataka,2022,125,1100,160,10,acceptee,3.919557687117477,
+5,Rice,Kharif,Assam,2020,151,1200,200,15,acceptee,2.484037732341795,
+6,Cotton,Kharif,Gujarat,2023,210,950,230,18,acceptee,3.1256375215913614,

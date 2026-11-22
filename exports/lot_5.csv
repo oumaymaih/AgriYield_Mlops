@@ -1,0 +1,4 @@
+﻿Ligne_CSV,Crop,Season,State,Crop_Year,Area,Annual_Rainfall,Fertilizer,Pesticide,Rendement_reel_t_ha,Rendement_predit_t_ha,Statut,Motif
+2,Rice,Kharif,Assam,2023,5.0,1250,145,2.5,,2.09377627738568,acceptee,
+3,Wheat,Rabi,Punjab,2024,9.0,900,210,3.5,,3.1256375215913614,acceptee,
+4,Maize,Kharif,Bihar,2021,6.5,1000,170,3.0,,3.919557687117477,acceptee,

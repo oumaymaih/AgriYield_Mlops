@@ -1,0 +1,6 @@
+﻿Ligne_CSV,Crop,Season,State,Crop_Year,Area,Annual_Rainfall,Fertilizer,Pesticide,Statut,Rendement_predit_t_ha,Motif
+2,Rice,Kharif,Assam,2020.0,-150,1200,200,15,refusee,,Area = -150 : Area doit être positif ou nul.
+3,Wheat,Rabi,Punjab,2021.0,180,850,-20,12,refusee,,Fertilizer = -20 : Fertilizer doit être positif ou nul.
+4,Maize,Kharif,Karnataka,2020.5,125,1100,160,10,refusee,,Crop_Year = 2020.5 : l'année doit être un entier entre 1900 et 2100.
+5,Cotton,Kharif,Gujarat,2023.0,210,-950,230,18,refusee,,Annual_Rainfall = -950 : Annual_Rainfall doit être positif ou nul.
+6,Rice,Kharif,Assam,, , , ,15,refusee,,"4 champs sont manquants (Crop_Year, Area, Annual_Rainfall, Fertilizer). Maximum autorisé : 3."
