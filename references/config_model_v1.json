@@ -1,0 +1,25 @@
+{
+  "version": "V1",
+  "type": "regression",
+  "algorithme": "GradientBoostingRegressor",
+  "parametres": {
+    "n_estimators": 100,
+    "learning_rate": 0.1,
+    "max_depth": 3,
+    "random_state": 42
+  },
+  "cible": "Yield",
+  "features": [
+    "Crop",
+    "Season",
+    "State",
+    "Crop_Year",
+    "Area",
+    "Annual_Rainfall",
+    "Fertilizer",
+    "Pesticide"
+  ],
+  "train_sha256": "f3150a2113b625a0bd836dca70b240139b5251f2ef689aa5973238218273ffe5",
+  "preprocessing": "preprocessing.pkl",
+  "modele": "model_v1.pkl"
+}

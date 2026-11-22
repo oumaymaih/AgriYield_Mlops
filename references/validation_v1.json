@@ -1,0 +1,13 @@
+{
+    "modele": "model_v1.pkl",
+    "algorithme": "GradientBoostingRegressor",
+    "ensemble": "validation",
+    "metriques": {
+        "n": 1969,
+        "r2": 0.9813519354403313,
+        "mae": 10.001499650865293,
+        "rmse": 108.70742707473978
+    },
+    "seuil_classification": null,
+    "note": "Régression : aucun seuil de classification"
+}

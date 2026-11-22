@@ -1,0 +1,22 @@
+{
+    "version": "v1",
+    "modele": "model_v1.pkl",
+    "preprocessing": "preprocessing.pkl",
+    "algorithme": "GradientBoostingRegressor",
+    "ensemble": "test",
+    "metriques": {
+        "n": 1969,
+        "r2": 0.9874270895775633,
+        "mae": 11.75713840826453,
+        "rmse": 109.74358212256097,
+        "medae": 1.0578579910952537
+    },
+    "statistiques_cible": {
+        "n": 1969,
+        "moyenne": 96.95590950542307,
+        "mediane": 1.032173913,
+        "ecart_type": 978.9748439217203,
+        "minimum": 0.0,
+        "maximum": 14410.51667
+    }
+}
