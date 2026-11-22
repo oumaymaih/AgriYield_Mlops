@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}AgriYield MLOps{% endblock %}
+    </title>
+
+    <!-- CSS commun -->
+    <link rel="stylesheet"
+          href="/static/css/style.css">
+
+    <!-- CSS spécifique à chaque page -->
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- =====================================
+         BARRE DE NAVIGATION
+    ====================================== -->
+
+    <header class="navbar">
+
+        <a href="/accueil" class="logo">
+            <span class="logo-text">
+                AgriYield <strong>MLOps</strong>
+            </span>
+        </a>
+
+        <nav class="nav-links"
+             aria-label="Navigation principale">
+
+            <!-- Accueil -->
+            <a href="/accueil"
+               class="nav-link {% if request.url.path == '/accueil' %}active{% endif %}"
+               {% if request.url.path == '/accueil' %}aria-current="page"{% endif %}>
+                Accueil
+            </a>
+
+            <!-- Prédiction -->
+            <a href="/prediction"
+               class="nav-link {% if request.url.path == '/prediction' %}active{% endif %}"
+               {% if request.url.path == '/prediction' %}aria-current="page"{% endif %}>
+                Prédiction
+            </a>
+
+            <!-- Historique -->
+            <a href="/historique"
+               class="nav-link {% if request.url.path == '/historique' %}active{% endif %}"
+               {% if request.url.path == '/historique' %}aria-current="page"{% endif %}>
+                Historique
+            </a>
+
+            <!-- Evidently AI -->
+            <a href="/evidently"
+               class="nav-link {% if request.url.path == '/evidently' %}active{% endif %}"
+               {% if request.url.path == '/evidently' %}aria-current="page"{% endif %}>
+                Evidently AI
+            </a>
+
+            <!-- Réentraînement -->
+            <a href="/reentrainement"
+               class="nav-link {% if request.url.path == '/reentrainement' %}active{% endif %}"
+               {% if request.url.path == '/reentrainement' %}aria-current="page"{% endif %}>
+                Réentraînement
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================
+         CONTENU DES PAGES
+    ====================================== -->
+
+    <main class="contenu">
+        {% block content %}{% endblock %}
+    </main>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <!-- JavaScript commun -->
+    <script src="/static/js/app.js"></script>
+
+    <!-- JavaScript spécifique à chaque page -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

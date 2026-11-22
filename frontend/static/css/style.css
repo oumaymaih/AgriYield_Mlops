@@ -1,0 +1,1147 @@
+/* ==========================================
+
+   AGRIYIELD MLOPS - STYLE COMMUN
+
+========================================== */
+
+:root {
+
+    --vert: #138a45;
+
+    --vert-fonce: #08742e;
+
+    --vert-clair: #e5f6e9;
+
+    --bleu-fonce: #142b3b;
+
+    --blanc: #ffffff;
+
+}
+
+/* ==========================================
+
+   1. REINITIALISATION
+
+========================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+html,
+
+body {
+
+    width: 100%;
+
+    min-height: 100%;
+
+}
+
+body {
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    color: var(--bleu-fonce);
+
+    background: var(--blanc);
+
+}
+
+/* ==========================================
+
+   2. BARRE DE NAVIGATION
+
+========================================== */
+
+.navbar {
+
+    width: 100%;
+
+    min-height: 70px;
+
+    padding: 10px 4%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-radius: 0 0 15px 15px;
+
+    box-shadow: 0 4px 20px rgba(0, 40, 30, 0.10);
+
+    position: relative;
+
+    z-index: 100;
+
+}
+
+/* ==========================================
+
+   3. LOGO
+
+========================================== */
+
+.logo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 23px;
+
+    font-weight: 800;
+
+    color: var(--bleu-fonce);
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+}
+
+.logo-text {
+
+    display: inline-block;
+
+}
+
+.logo strong,
+
+.logo-text strong {
+
+    color: var(--vert);
+
+}
+
+/* ==========================================
+
+   4. LIENS DE NAVIGATION
+
+========================================== */
+
+.nav-links {
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    flex-wrap: nowrap;
+
+    gap: 12px;
+
+    margin-left: auto;
+
+}
+
+/* Style des liens */
+
+.nav-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    border-radius: 12px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #344256;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+
+        background 0.25s ease,
+
+        color 0.25s ease,
+
+        transform 0.25s ease;
+
+}
+
+/* Survol */
+
+.nav-link:hover {
+
+    color: var(--vert-fonce);
+
+    background: var(--vert-clair);
+
+    transform: translateY(-2px);
+
+}
+
+/* Page active */
+
+.nav-link.active {
+
+    background: linear-gradient(
+
+        135deg,
+
+        #249e4e,
+
+        #087a3c
+
+    );
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    border: 1px solid rgba(255, 255, 255, 0.55);
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(0, 90, 35, 0.18);
+
+}
+
+/* ==========================================
+
+   5. CONTENU PRINCIPAL
+
+========================================== */
+
+.contenu {
+
+    width: 100%;
+
+    max-width: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+/* ==========================================
+
+   6. RESPONSIVE TABLETTE - NAVIGATION
+
+========================================== */
+
+@media (max-width: 1100px) {
+
+    .navbar {
+
+        padding: 12px 3%;
+
+        gap: 15px;
+
+    }
+
+    .logo {
+
+        font-size: 20px;
+
+    }
+
+    .nav-links {
+
+        gap: 5px;
+
+    }
+
+    .nav-link {
+
+        padding: 10px 12px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+/* ==========================================
+
+   7. RESPONSIVE MOBILE - NAVIGATION
+
+========================================== */
+
+@media (max-width: 800px) {
+
+    .navbar {
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        padding: 14px;
+
+    }
+
+    .nav-links {
+
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        margin-left: 0;
+
+    }
+
+    .nav-link {
+
+        padding: 9px 12px;
+
+        font-size: 12px;
+
+    }
+
+}
+
+/* ==========================================
+
+   8. PETITS ECRANS - NAVIGATION
+
+========================================== */
+
+@media (max-width: 480px) {
+
+    .logo {
+
+        font-size: 20px;
+
+    }
+
+    .nav-links {
+
+        gap: 5px;
+
+    }
+
+    .nav-link {
+
+        padding: 8px 10px;
+
+        font-size: 11px;
+
+    }
+
+}
+
+/* ==========================================
+
+   9. PAGE HISTORIQUE
+
+========================================== */
+
+.historique-page {
+
+    width: 94%;
+
+    max-width: 1400px;
+
+    margin: 35px auto 60px;
+
+}
+
+/* ==========================================
+
+   10. CADRE DE PRESENTATION
+
+========================================== */
+
+.historique-intro {
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    border-radius: 18px;
+
+    background: rgba(19, 138, 69, 0.06);
+
+    border: 1px solid rgba(19, 138, 69, 0.15);
+
+    box-shadow: 0 5px 24px rgba(0, 40, 30, 0.04);
+
+}
+
+.historique-intro h1 {
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: var(--bleu-fonce);
+
+    margin-bottom: 12px;
+
+}
+
+.historique-intro p {
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color: #526475;
+
+    max-width: 950px;
+
+}
+
+/* ==========================================
+
+   11. CARTES TRANSPARENTES
+
+========================================== */
+
+.historique-card {
+
+    padding: 24px;
+
+    margin-bottom: 24px;
+
+    background: rgba(255, 255, 255, 0.70);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(19, 138, 69, 0.13);
+
+    border-radius: 18px;
+
+    box-shadow: 0 5px 24px rgba(0, 40, 30, 0.05);
+
+}
+
+.historique-card h2 {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: var(--bleu-fonce);
+
+    margin-bottom: 20px;
+
+}
+
+/* ==========================================
+
+   12. CARTES STATISTIQUES
+
+========================================== */
+
+.historique-stats {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+.historique-stats .stat-card {
+
+    margin-bottom: 24px;
+
+    transition:
+
+        transform 0.25s ease,
+
+        box-shadow 0.25s ease;
+
+}
+
+.historique-stats .stat-card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 25px rgba(0, 80, 35, 0.10);
+
+}
+
+.historique-stats span {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #526475;
+
+}
+
+.historique-stats strong {
+
+    display: block;
+
+    margin-top: 12px;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    color: var(--vert);
+
+}
+
+/* ==========================================
+
+   13. FILTRES HISTORIQUE
+
+========================================== */
+
+.historique-filtres {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+}
+
+.historique-filtres .filtre-champ {
+
+    flex: 1 1 180px;
+
+}
+
+.historique-filtres label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: var(--bleu-fonce);
+
+}
+
+.historique-filtres input,
+
+.historique-filtres select {
+
+    width: 100%;
+
+    height: 43px;
+
+    padding: 10px 12px;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    border: 1px solid #d6e3da;
+
+    border-radius: 10px;
+
+    color: var(--bleu-fonce);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease;
+
+}
+
+.historique-filtres input:focus,
+
+.historique-filtres select:focus {
+
+    outline: none;
+
+    border-color: var(--vert);
+
+    box-shadow: 0 0 0 3px rgba(19, 138, 69, 0.12);
+
+}
+
+/* ==========================================
+
+   14. BOUTONS HISTORIQUE
+
+========================================== */
+
+.historique-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 17px;
+
+    min-height: 42px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: var(--vert);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+
+        background 0.2s ease,
+
+        transform 0.2s ease,
+
+        box-shadow 0.2s ease;
+
+}
+
+.historique-btn:hover {
+
+    background: var(--vert-fonce);
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 12px rgba(0, 90, 35, 0.15);
+
+}
+
+.historique-btn:active {
+
+    transform: translateY(0);
+
+}
+
+.historique-btn:focus-visible {
+
+    outline: 3px solid rgba(19, 138, 69, 0.35);
+
+    outline-offset: 2px;
+
+}
+
+/* Bouton secondaire */
+
+.historique-btn.secondaire {
+
+    background: var(--vert-clair);
+
+    color: var(--vert-fonce);
+
+}
+
+.historique-btn.secondaire:hover {
+
+    background: #d1eed9;
+
+}
+
+/* Petits boutons dans le tableau */
+
+.historique-btn.petit {
+
+    min-height: 34px;
+
+    padding: 7px 10px;
+
+    font-size: 12px;
+
+}
+
+/* ==========================================
+
+   15. ENTETE DU TABLEAU
+
+========================================== */
+
+.historique-table-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+}
+
+.historique-table-header h2 {
+
+    margin-bottom: 0;
+
+}
+
+/* ==========================================
+
+   16. TABLEAU HISTORIQUE
+
+========================================== */
+
+.historique-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 12px;
+
+    border: 1px solid #e7eee9;
+
+}
+
+.historique-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 13px;
+
+    background: rgba(255, 255, 255, 0.50);
+
+}
+
+.historique-table thead {
+
+    background: rgba(19, 138, 69, 0.09);
+
+}
+
+.historique-table th {
+
+    background: rgba(19, 138, 69, 0.09);
+
+    color: var(--bleu-fonce);
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+.historique-table th,
+
+.historique-table td {
+
+    padding: 14px 12px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e7eee9;
+
+    vertical-align: middle;
+
+}
+
+.historique-table tbody tr {
+
+    transition: background 0.2s ease;
+
+}
+
+.historique-table tbody tr:hover {
+
+    background: rgba(19, 138, 69, 0.05);
+
+}
+
+.historique-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+/* ==========================================
+
+   17. ACTIONS DANS LE TABLEAU
+
+========================================== */
+
+.historique-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+    min-width: 130px;
+
+}
+
+/* ==========================================
+
+   18. MESSAGES HISTORIQUE
+
+========================================== */
+
+#historique-message {
+
+    margin-top: 15px;
+
+    font-size: 13px;
+
+    color: #526475;
+
+}
+
+#historique-message.erreur {
+
+    color: #b42318;
+
+    font-weight: 600;
+
+}
+
+/* ==========================================
+
+   19. FENETRE DETAILS
+
+========================================== */
+
+.historique-dialog {
+
+    width: min(550px, 92vw);
+
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    padding: 25px;
+
+    border: 1px solid #d8e9dc;
+
+    border-radius: 18px;
+
+    background: white;
+
+    color: var(--bleu-fonce);
+
+    margin: auto;
+
+    box-shadow: 0 15px 50px rgba(0, 30, 20, 0.20);
+
+}
+
+.historique-dialog::backdrop {
+
+    background: rgba(10, 30, 25, 0.50);
+
+    backdrop-filter: blur(3px);
+
+}
+
+.historique-dialog-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+.historique-dialog-header h2 {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+#historique-details p {
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #edf2ee;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+#historique-details strong {
+
+    color: var(--bleu-fonce);
+
+}
+
+#historique-details h3 {
+
+    margin-top: 22px;
+
+    margin-bottom: 10px;
+
+    color: var(--vert-fonce);
+
+    font-size: 17px;
+
+}
+
+/* ==========================================
+
+   20. RESPONSIVE PAGE HISTORIQUE
+
+========================================== */
+
+@media (max-width: 1000px) {
+
+    .historique-stats {
+
+        gap: 12px;
+
+    }
+
+    .historique-stats strong {
+
+        font-size: 29px;
+
+    }
+
+    .historique-table {
+
+        min-width: 1050px;
+
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .historique-page {
+
+        width: 95%;
+
+        margin-top: 20px;
+
+    }
+
+    .historique-stats {
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 24px;
+
+    }
+
+    .historique-stats .stat-card {
+
+        margin-bottom: 0;
+
+    }
+
+    .historique-intro,
+
+    .historique-card {
+
+        padding: 18px;
+
+    }
+
+    .historique-intro h1 {
+
+        font-size: 25px;
+
+    }
+
+    .historique-intro p {
+
+        font-size: 14px;
+
+    }
+
+    .historique-table-header {
+
+        align-items: flex-start;
+
+    }
+
+    .historique-filtres {
+
+        align-items: stretch;
+
+    }
+
+    .historique-filtres .filtre-champ {
+
+        flex: 1 1 100%;
+
+    }
+
+    .historique-filtres .historique-btn {
+
+        flex: 1;
+
+    }
+
+    .historique-dialog {
+
+        padding: 18px;
+
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .historique-intro h1 {
+
+        font-size: 22px;
+
+    }
+
+    .historique-stats strong {
+
+        font-size: 28px;
+
+    }
+
+    .historique-table-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .historique-table-header .historique-btn {
+
+        width: 100%;
+
+    }
+
+    .historique-dialog-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}
+
+/* ==========================================
+   21. HISTORIQUE - FOND AGRICOLE VISIBLE
+   Image : frontend/static/images/agriculture-bg.jpg
+========================================== */
+
+/* Supprime le voile blanc qui masquait la photographie */
+body:has(.historique-page) {
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.08)
+        ),
+        url("/static/images/agriculture-bg.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Navbar en verre : photographie visible derrière */
+body:has(.historique-page) .navbar {
+    background: rgba(255, 255, 255, 0.15);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 40, 30, 0.10);
+}
+
+/* Cartes : transparence plus importante */
+body:has(.historique-page) .historique-card {
+    background: rgba(255, 255, 255, 0.32);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+/* Grand encadré de présentation */
+body:has(.historique-page) .historique-intro {
+    background: rgba(255, 255, 255, 0.32);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+/* Tableau : lignes transparentes, entête légèrement plus lisible */
+body:has(.historique-page) .historique-table {
+    background: rgba(255, 255, 255, 0.20);
+}
+body:has(.historique-page) .historique-table th {
+    background: rgba(255, 255, 255, 0.42);
+}
+
+/* Les champs de saisie restent lisibles */
+body:has(.historique-page) .historique-filtres input,
+body:has(.historique-page) .historique-filtres select {
+    background: rgba(255, 255, 255, 0.82);
+}
+
+@media (max-width: 800px) {
+    body:has(.historique-page) {
+        background-attachment: scroll;
+    }
+}

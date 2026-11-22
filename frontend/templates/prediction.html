@@ -1,0 +1,537 @@
+
+{% extends "base.html" %}
+
+{% block title %}Prédiction - AgriYield MLOps{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/prediction.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-prediction">
+    <div class="prediction-container">
+
+        <!-- =====================================
+             BLOC 1 : CONSIGNES
+        ====================================== -->
+
+        <section class="bloc-verre bloc-consignes">
+
+            <div class="consignes-titre">
+                <div class="icone-section">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <rect x="5" y="3" width="14" height="18" rx="2"/>
+                        <path d="M9 8h6M9 12h6M9 16h4"/>
+                    </svg>
+                </div>
+
+                <h2>Consignes de saisie</h2>
+            </div>
+
+            <div class="consignes-contenu">
+
+                <div class="regles-generales">
+                    <h3>Règles générales</h3>
+
+                    <ul class="liste-consignes">
+                        <li>Au maximum <strong>3 champs manquants</strong> parmi les 8 caractéristiques.</li>
+                        <li>Aucune valeur renseignée ne doit être invalide.</li>
+                        <li>Les 8 caractéristiques ne sont pas toutes obligatoires.</li>
+                        <li>Le rendement réel <strong>Yield est facultatif</strong>.</li>
+                    </ul>
+
+                    <p class="note-consignes">
+                        Les valeurs manquantes acceptées sont traitées
+                        par le préprocesseur du modèle.
+                        Le rendement réel sert uniquement à évaluer
+                        la prédiction, et non à la calculer.
+                    </p>
+                </div>
+
+                <div class="regles-caracteristiques">
+                    <h3>Règles par caractéristique</h3>
+
+                    <div class="regles-grille">
+
+                        <div class="regle-item">
+                            <strong>Crop :</strong>
+                            <span>Culture agricole (Rice, Wheat, Maize...).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Area :</strong>
+                            <span>Surface cultivée (≥ 0, en ha).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Season :</strong>
+                            <span>Saison (Kharif, Rabi, Summer, Winter...).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Annual_Rainfall :</strong>
+                            <span>Précipitations annuelles (≥ 0, en mm).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>State :</strong>
+                            <span>Région ou État.</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Fertilizer :</strong>
+                            <span>Quantité d'engrais (≥ 0).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Crop_Year :</strong>
+                            <span>Année entière entre 1900 et 2100.</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Pesticide :</strong>
+                            <span>Quantité de pesticides (≥ 0).</span>
+                        </div>
+
+                        <div class="regle-item">
+                            <strong>Yield :</strong>
+                            <span>Rendement réel facultatif (≥ 0, en t/ha).</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================
+             BLOCS DE PREDICTION
+        ====================================== -->
+
+        <div class="prediction-grille">
+
+            <!-- =================================
+                 BLOC 2 : SAISIE INDIVIDUELLE
+            ================================== -->
+
+            <section class="bloc-verre bloc-individuel">
+
+                <div class="bloc-entete">
+                    <div class="icone-section">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                            <path d="M6 9h1M10 9h1M14 9h1M18 9h1
+                                     M6 13h1M10 13h1M14 13h1M18 13h1
+                                     M7 16h10"/>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h2>Saisie individuelle</h2>
+                        <p>
+                            Renseignez les caractéristiques
+                            d'une seule observation.
+                        </p>
+                    </div>
+                </div>
+
+                <form id="form-prediction"
+                      autocomplete="off"
+                      novalidate>
+
+                    <div class="form-grille">
+
+                        <!-- Crop -->
+                        <div class="champ-formulaire">
+                            <label for="Crop">Crop</label>
+                            <input type="text"
+                                   id="Crop"
+                                   name="Crop"
+                                   placeholder="Ex. : Rice, Wheat, Maize">
+                        </div>
+
+                        <!-- Area -->
+                        <div class="champ-formulaire">
+                            <label for="Area">Area (ha)</label>
+                            <input type="number"
+                                   id="Area"
+                                   name="Area"
+                                   min="0"
+                                   step="any"
+                                   placeholder="Ex. : 5.2">
+                        </div>
+
+                        <!-- Season -->
+                        <div class="champ-formulaire">
+                            <label for="Season">Season</label>
+                            <input type="text"
+                                   id="Season"
+                                   name="Season"
+                                   placeholder="Ex. : Kharif, Rabi, Summer">
+                        </div>
+
+                        <!-- Annual_Rainfall -->
+                        <div class="champ-formulaire">
+                            <label for="Annual_Rainfall">
+                                Annual_Rainfall (mm)
+                            </label>
+                            <input type="number"
+                                   id="Annual_Rainfall"
+                                   name="Annual_Rainfall"
+                                   min="0"
+                                   step="any"
+                                   placeholder="Ex. : 1200">
+                        </div>
+
+                        <!-- State -->
+                        <div class="champ-formulaire">
+                            <label for="State">State</label>
+                            <input type="text"
+                                   id="State"
+                                   name="State"
+                                   placeholder="Ex. : Punjab, Karnataka">
+                        </div>
+
+                        <!-- Fertilizer -->
+                        <div class="champ-formulaire">
+                            <label for="Fertilizer">Fertilizer</label>
+                            <input type="number"
+                                   id="Fertilizer"
+                                   name="Fertilizer"
+                                   min="0"
+                                   step="any"
+                                   placeholder="Ex. : 150">
+                        </div>
+
+                        <!-- Crop_Year -->
+                        <div class="champ-formulaire">
+                            <label for="Crop_Year">Crop_Year</label>
+                            <input type="number"
+                                   id="Crop_Year"
+                                   name="Crop_Year"
+                                   min="1900"
+                                   max="2100"
+                                   step="1"
+                                   placeholder="Ex. : 2022">
+                        </div>
+
+                        <!-- Pesticide -->
+                        <div class="champ-formulaire">
+                            <label for="Pesticide">Pesticide</label>
+                            <input type="number"
+                                   id="Pesticide"
+                                   name="Pesticide"
+                                   min="0"
+                                   step="any"
+                                   placeholder="Ex. : 2.5">
+                        </div>
+
+                        <!-- =================================
+                             YIELD : RENDEMENT REEL FACULTATIF
+                        ================================== -->
+
+                        <div class="champ-formulaire">
+                            <label for="Yield">
+                                Yield — Rendement réel (t/ha)
+                            </label>
+                            <input type="number"
+                                   id="Yield"
+                                   name="Yield"
+                                   min="0"
+                                   step="any"
+                                   placeholder="Ex. : 2.85">
+                        </div>
+
+                    </div>
+
+                    <!-- Bouton de prédiction -->
+                    <div class="zone-bouton">
+
+                        <button type="submit"
+                                class="bouton-predire"
+                                id="btn-predire-individuel">
+                            Prédire
+                        </button>
+
+                        <span class="modele-actif">
+                            Modèle actif :
+                            <strong id="version-individuelle">
+                                {{ version_modele | default("V1") }}
+                            </strong>
+                        </span>
+
+                    </div>
+
+                </form>
+
+                <!-- Message de validation -->
+                <div id="message-individuel"
+                     class="message-validation"
+                     role="status"
+                     aria-live="polite"></div>
+
+
+                <!-- =================================
+                     RESULTAT DE LA PREDICTION
+                ================================== -->
+
+                <div id="resultat-individuel"
+                     class="resultat-prediction"
+                     aria-live="polite"
+                     hidden>
+
+                    <h3>Résultat de la prédiction</h3>
+
+                    <!-- Rendement réel -->
+
+                    <div class="resultat-valeur">
+
+                        <span>Rendement agricole réel :</span>
+
+                        <strong>
+                            <span id="rendement-reel">—</span>
+                            t/ha
+                        </strong>
+
+                    </div>
+
+                    <!-- Rendement prédit -->
+
+                    <div class="resultat-valeur">
+
+                        <span>Rendement agricole prédit :</span>
+
+                        <strong>
+                            <span id="rendement-predit">—</span>
+                            t/ha
+                        </strong>
+
+                    </div>
+
+                    <p class="resultat-description">
+                        Rendements exprimés en
+                        <strong>tonnes par hectare (t/ha)</strong>.
+                        Le rendement prédit est calculé par le modèle
+                        <strong>V1</strong>.
+                        Le rendement réel est facultatif.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 BLOC 3 : IMPORT CSV
+            ================================== -->
+
+            <section class="bloc-verre bloc-csv">
+
+                <div class="bloc-entete">
+
+                    <div class="icone-section">
+                        <svg viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <path d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6
+                                     a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+                            <path d="M14 2v6h5"/>
+                            <path d="M7 15h10M7 18h10"/>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h2>Import CSV</h2>
+                        <p>
+                            Importez un fichier contenant
+                            plusieurs observations.
+                        </p>
+                    </div>
+
+                </div>
+
+                <form id="form-csv"
+                      enctype="multipart/form-data">
+
+                    <div class="zone-import" id="zone-import">
+
+                        <div class="import-icone">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <path d="M12 16V5"/>
+                                <path d="m7 10 5-5 5 5"/>
+                                <path d="M4 16v3a2 2 0 0 0 2 2h12
+                                         a2 2 0 0 0 2-2v-3"/>
+                            </svg>
+                        </div>
+
+                        <h3>Importer votre fichier CSV</h3>
+
+                        <p>Glissez-déposez votre fichier CSV ici</p>
+
+                        <span class="import-separateur">ou</span>
+
+                        <label for="fichier-csv"
+                               class="bouton-fichier">
+                            Choisir un fichier
+                        </label>
+
+                        <input type="file"
+                               id="fichier-csv"
+                               name="file"
+                               accept=".csv,text/csv"
+                               hidden>
+
+                        <p id="nom-fichier"
+                           class="nom-fichier"
+                           aria-live="polite"></p>
+
+                        <small>
+                            Format CSV — 8 caractéristiques
+                            + Yield facultatif
+                        </small>
+
+                    </div>
+
+                    <div class="csv-informations">
+
+                        <h3>Structure attendue du fichier</h3>
+
+                        <div class="csv-colonnes">
+                            <span>Crop</span>
+                            <span>Season</span>
+                            <span>State</span>
+                            <span>Crop_Year</span>
+                            <span>Area</span>
+                            <span>Annual_Rainfall</span>
+                            <span>Fertilizer</span>
+                            <span>Pesticide</span>
+                            <span>Yield (facultatif)</span>
+                        </div>
+
+                        <p class="csv-note">
+                            Chaque ligne est validée individuellement.
+                            Les lignes invalides sont signalées.
+                            La colonne Yield représente le rendement réel
+                            et n'est pas utilisée pour calculer la prédiction.
+                        </p>
+
+                    </div>
+
+                    <div class="zone-bouton">
+
+                        <button type="submit"
+                                class="bouton-predire"
+                                id="btn-predire-csv">
+                            Prédire
+                        </button>
+
+                        <span class="modele-actif">
+                            Modèle actif :
+                            <strong id="version-csv">
+                                {{ version_modele | default("V1") }}
+                            </strong>
+                        </span>
+
+                    </div>
+
+                </form>
+
+                <!-- Message CSV -->
+                <div id="message-csv"
+                     class="message-validation"
+                     role="status"
+                     aria-live="polite"></div>
+
+
+                <!-- =================================
+                     RESULTATS CSV
+                ================================== -->
+
+                <div class="resultats-import"
+                     id="resultats-csv"
+                     hidden>
+
+                    <h3>Résultats de l'import</h3>
+
+                    <div class="statistiques-import">
+
+                        <div class="statistique statistique-acceptee">
+                            <span>Lignes acceptées</span>
+                            <strong id="lignes-acceptees">—</strong>
+                        </div>
+
+                        <div class="statistique statistique-refusee">
+                            <span>Lignes refusées</span>
+                            <strong id="lignes-refusees">—</strong>
+                        </div>
+
+                        <div class="statistique statistique-total">
+                            <span>Total</span>
+                            <strong id="lignes-total">—</strong>
+                        </div>
+
+                    </div>
+
+                    <a href="#"
+                       id="telecharger-resultat"
+                       class="bouton-telecharger"
+                       hidden>
+                        Télécharger le résultat CSV
+                    </a>
+
+                </div>
+
+
+                <!-- =================================
+                     TABLEAU DES RESULTATS CSV
+                ================================== -->
+
+                <div class="tableau-resultats"
+                     id="conteneur-tableau-csv"
+                     hidden>
+
+                    <h3>Détail des observations</h3>
+
+                    <div class="tableau-scroll">
+
+                        <table id="tableau-csv">
+
+                            <thead>
+                                <tr>
+                                    <th>Ligne</th>
+                                    <th>Statut</th>
+                                    <th>Rendement réel (t/ha)</th>
+                                    <th>Rendement prédit (t/ha)</th>
+                                    <th>Motif de refus</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="corps-tableau-csv"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

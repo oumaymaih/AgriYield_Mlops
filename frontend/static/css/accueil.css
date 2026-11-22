@@ -1,0 +1,141 @@
+
+/* ====================================
+   AGRIYIELD MLOPS - PAGE ACCUEIL
+==================================== */
+
+/* ====================================
+   IMAGE PRINCIPALE DE L'ACCUEIL
+==================================== */
+
+.accueil-hero {
+    width: 100%;
+
+    /* Hauteur disponible sous la navigation */
+    height: calc(100vh - 75px);
+    min-height: 500px;
+
+    /* Image principale */
+    background-image: url("/static/images/accueil.jpg");
+
+    /* Afficher toute l'image */
+    background-size: 100% 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+
+    /* Animation d'apparition */
+    animation: apparition 0.7s ease-out;
+}
+
+/* ====================================
+   BARRE DE NAVIGATION TRANSPARENTE
+==================================== */
+
+/* Afficher l'image derrière la navigation */
+
+body:has(.accueil-hero) {
+    background-image: url("/static/images/accueil.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Barre transparente avec effet verre */
+
+body:has(.accueil-hero) .navbar {
+    background: rgba(16, 55, 80, 0.38);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 0;
+
+    box-shadow: 0 4px 20px rgba(0, 20, 35, 0.12);
+}
+
+/* Logo et liens blancs */
+
+body:has(.accueil-hero) .logo,
+body:has(.accueil-hero) .nav-link {
+    color: #ffffff;
+}
+
+/* MLOps en vert */
+
+body:has(.accueil-hero) .logo strong {
+    color: #65e794;
+}
+
+/* Survol des liens */
+
+body:has(.accueil-hero) .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+/* Bouton Accueil actif */
+
+body:has(.accueil-hero) .nav-link.active {
+    background: linear-gradient(
+        135deg,
+        #269f4c,
+        #087538
+    );
+
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ====================================
+   ANIMATION D'APPARITION
+==================================== */
+
+@keyframes apparition {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ====================================
+   RESPONSIVE - TABLETTES
+==================================== */
+
+@media (max-width: 950px) {
+
+    .accueil-hero {
+        height: 65vh;
+        min-height: 400px;
+        background-size: 100% 100%;
+    }
+}
+
+/* ====================================
+   RESPONSIVE - TELEPHONES
+==================================== */
+
+@media (max-width: 600px) {
+
+    .accueil-hero {
+        height: 55vh;
+        min-height: 300px;
+        background-size: 100% 100%;
+    }
+}
+
+/* ==========================================
+   MASQUAGE DES RESULTATS AVANT PREDICTION
+========================================== */
+
+.page-prediction .resultat-prediction[hidden],
+.page-prediction .resultats-import[hidden],
+.page-prediction .tableau-resultats[hidden],
+.page-prediction .bouton-telecharger[hidden] {
+    display: none !important;
+}

@@ -1,0 +1,651 @@
+
+{% extends "base.html" %}
+
+{% block title %}Historique - AgriYield MLOps{% endblock %}
+
+{% block content %}
+
+<div class="historique-page">
+
+    <!-- PRESENTATION -->
+    <section class="historique-intro">
+        <h1>Historique des prédictions</h1>
+        <p>
+            Consultez l'historique des prédictions réalisées
+            par nos modèles. Filtrez les résultats par date
+            et par version du modèle, comparez les rendements
+            prédits et réels et retrouvez les observations
+            enregistrées dans MariaDB.
+        </p>
+    </section>
+
+    <!-- STATISTIQUES -->
+    <section class="historique-stats">
+
+        <article class="historique-card stat-card">
+            <span>Observations totales</span>
+            <strong id="stat-observations">—</strong>
+        </article>
+
+        <article class="historique-card stat-card">
+            <span>Prédictions réalisées</span>
+            <strong id="stat-predictions">—</strong>
+        </article>
+
+        <article class="historique-card stat-card">
+            <span>Observations avec rendement réel</span>
+            <strong id="stat-reels">—</strong>
+        </article>
+
+    </section>
+
+    <!-- FILTRES -->
+    <section class="historique-card">
+
+        <h2>Filtrer l'historique</h2>
+
+        <div class="historique-filtres">
+
+            <div class="filtre-champ">
+                <label for="date-debut">Date début</label>
+                <input type="date" id="date-debut">
+            </div>
+
+            <div class="filtre-champ">
+                <label for="date-fin">Date fin</label>
+                <input type="date" id="date-fin">
+            </div>
+
+            <div class="filtre-champ">
+                <label for="filtre-modele">
+                    Version du modèle
+                </label>
+
+                <select id="filtre-modele">
+                    <option value="">
+                        Toutes les versions
+                    </option>
+                </select>
+            </div>
+
+            <button
+                type="button"
+                class="historique-btn"
+                id="btn-filtrer">
+                Filtrer
+            </button>
+
+            <button
+                type="button"
+                class="historique-btn secondaire"
+                id="btn-reinitialiser">
+                Réinitialiser
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- TABLEAU -->
+    <section class="historique-card">
+
+        <div class="historique-table-header">
+            <h2>Observations et prédictions</h2>
+
+            <button
+                type="button"
+                class="historique-btn"
+                id="btn-export">
+                Télécharger CSV
+            </button>
+        </div>
+
+        <div class="historique-table-wrapper">
+
+            <table class="historique-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Culture</th>
+                        <th>Saison</th>
+                        <th>Région</th>
+                        <th>Rendement prédit</th>
+                        <th>Rendement réel</th>
+                        <th>Version</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="historique-lignes">
+                    <tr>
+                        <td colspan="10">
+                            Chargement de l'historique...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p id="historique-message" role="status"></p>
+
+    </section>
+
+</div>
+
+<!-- FENETRE DETAILS -->
+<dialog id="historique-dialog" class="historique-dialog">
+
+    <div class="historique-dialog-header">
+        <h2>Détails de l'observation</h2>
+
+        <button
+            type="button"
+            class="historique-btn secondaire"
+            id="btn-fermer-dialog">
+            Fermer
+        </button>
+    </div>
+
+    <div id="historique-details"></div>
+
+</dialog>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+let historiqueActuel = [];
+
+const $ = id => document.getElementById(id);
+
+function afficherValeur(valeur) {
+    if (
+        valeur === null ||
+        valeur === undefined ||
+        valeur === ""
+    ) {
+        return "—";
+    }
+
+    return String(valeur);
+}
+
+function creerCellule(valeur) {
+    const cellule = document.createElement("td");
+    cellule.textContent = afficherValeur(valeur);
+    return cellule;
+}
+
+function nomVersion(modele) {
+    return modele?.version ||
+           modele?.nom ||
+           modele?.name ||
+           ("Modèle " + modele?.id);
+}
+
+function afficherDate(valeur) {
+    if (!valeur) return "—";
+
+    const date = new Date(valeur);
+
+    if (Number.isNaN(date.getTime())) {
+        return valeur;
+    }
+
+    return date.toLocaleString("fr-FR");
+}
+
+function afficherMessage(message, erreur = false) {
+    const element = $("historique-message");
+    element.textContent = message;
+    element.classList.toggle("erreur", erreur);
+}
+
+
+// ==========================================
+// CHARGER LES DONNEES DEPUIS FASTAPI
+// ==========================================
+
+async function chargerHistorique() {
+
+    const params = new URLSearchParams();
+
+    const debut = $("date-debut").value;
+    const fin = $("date-fin").value;
+    const modele = $("filtre-modele").value;
+
+    if (debut && fin && debut > fin) {
+        afficherMessage(
+            "La date de début doit précéder la date de fin.",
+            true
+        );
+        return;
+    }
+
+    if (debut) params.set("date_debut", debut);
+    if (fin) params.set("date_fin", fin);
+    if (modele) params.set("model_version_id", modele);
+
+    afficherMessage("Chargement...");
+
+    try {
+
+        const reponse = await fetch(
+            "/api/observations?" + params.toString()
+        );
+
+        if (!reponse.ok) {
+            throw new Error(
+                "Impossible de charger les observations."
+            );
+        }
+
+        const donnees = await reponse.json();
+
+        historiqueActuel = donnees.historique || [];
+
+        // Cartes de synthèse
+        $("stat-observations").textContent =
+            donnees.statistiques.observations;
+
+        $("stat-predictions").textContent =
+            donnees.statistiques.predictions;
+
+        $("stat-reels").textContent =
+            donnees.statistiques.rendements_reels;
+
+        // Versions disponibles
+        const select = $("filtre-modele");
+        const selection = select.value;
+
+        select.replaceChildren(
+            new Option("Toutes les versions", "")
+        );
+
+        for (const version of donnees.versions) {
+            select.add(
+                new Option(
+                    nomVersion(version),
+                    String(version.id)
+                )
+            );
+        }
+
+        select.value = selection;
+
+        afficherTableau(historiqueActuel);
+
+        afficherMessage(
+            historiqueActuel.length +
+            " prédiction(s) affichée(s)."
+        );
+
+    } catch (erreur) {
+
+        afficherMessage(erreur.message, true);
+
+    }
+}
+
+
+// ==========================================
+// AFFICHER LE TABLEAU
+// ==========================================
+
+function afficherTableau(lignes) {
+
+    const tbody = $("historique-lignes");
+    tbody.replaceChildren();
+
+    if (lignes.length === 0) {
+
+        const tr = document.createElement("tr");
+        const td = creerCellule(
+            "Aucune prédiction trouvée."
+        );
+
+        td.colSpan = 10;
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+
+        return;
+    }
+
+    for (const item of lignes) {
+
+        const observation = item.observation;
+        const prediction = item.prediction;
+        const modele = item.modele;
+
+        const tr = document.createElement("tr");
+
+        const reelDisponible =
+            observation.rendement_reel !== null &&
+            observation.rendement_reel !== undefined;
+
+        const statut = reelDisponible
+            ? "Réel disponible"
+            : "En attente du réel";
+
+        const valeurs = [
+            observation.id,
+            afficherDate(observation.date_observation),
+            observation.Crop,
+            observation.Season,
+            observation.State,
+            prediction.rendement_predit,
+            observation.rendement_reel,
+            nomVersion(modele),
+            statut
+        ];
+
+        for (const valeur of valeurs) {
+            tr.appendChild(creerCellule(valeur));
+        }
+
+        const actions = document.createElement("td");
+        actions.className = "historique-actions";
+
+        // Bouton détails
+        const btnDetails = document.createElement("button");
+
+        btnDetails.type = "button";
+        btnDetails.className = "historique-btn petit";
+        btnDetails.textContent = "Détails";
+
+        btnDetails.addEventListener(
+            "click",
+            () => voirDetails(observation.id)
+        );
+
+        actions.appendChild(btnDetails);
+
+        // Ajouter un rendement réel uniquement si absent
+        if (!reelDisponible) {
+
+            const btnReel = document.createElement("button");
+
+            btnReel.type = "button";
+            btnReel.className =
+                "historique-btn petit secondaire";
+
+            btnReel.textContent = "Ajouter réel";
+
+            btnReel.addEventListener(
+                "click",
+                () => ajouterRendementReel(observation.id)
+            );
+
+            actions.appendChild(btnReel);
+        }
+
+        tr.appendChild(actions);
+        tbody.appendChild(tr);
+    }
+}
+
+
+// ==========================================
+// VOIR LES DETAILS
+// ==========================================
+
+async function voirDetails(id) {
+
+    try {
+
+        const reponse = await fetch(
+            "/api/observations/" + id
+        );
+
+        const donnees = await reponse.json();
+
+        if (!reponse.ok) {
+            throw new Error(
+                donnees.detail || "Observation introuvable."
+            );
+        }
+
+        const contenu = $("historique-details");
+        contenu.replaceChildren();
+
+        const observation = donnees.observation;
+
+        const champs = [
+            ["ID", observation.id],
+            ["Culture", observation.Crop],
+            ["Saison", observation.Season],
+            ["Région", observation.State],
+            ["Année", observation.Crop_Year],
+            ["Surface", observation.Area],
+            ["Pluviométrie", observation.Annual_Rainfall],
+            ["Engrais", observation.Fertilizer],
+            ["Pesticide", observation.Pesticide],
+            ["Rendement réel", observation.rendement_reel]
+        ];
+
+        for (const [nom, valeur] of champs) {
+
+            const ligne = document.createElement("p");
+
+            const titre = document.createElement("strong");
+            titre.textContent = nom + " : ";
+
+            ligne.appendChild(titre);
+            ligne.appendChild(
+                document.createTextNode(afficherValeur(valeur))
+            );
+
+            contenu.appendChild(ligne);
+        }
+
+        const titrePredictions = document.createElement("h3");
+        titrePredictions.textContent = "Prédictions";
+        contenu.appendChild(titrePredictions);
+
+        for (const prediction of donnees.predictions) {
+
+            const ligne = document.createElement("p");
+
+            ligne.textContent =
+                "Version ID " + prediction.model_version_id +
+                " : " + prediction.rendement_predit;
+
+            contenu.appendChild(ligne);
+        }
+
+        $("historique-dialog").showModal();
+
+    } catch (erreur) {
+        alert(erreur.message);
+    }
+}
+
+
+// ==========================================
+// AJOUTER LE RENDEMENT REEL
+// ==========================================
+
+async function ajouterRendementReel(id) {
+
+    const saisie = prompt(
+        "Saisir le rendement réel de l'observation " + id
+    );
+
+    if (saisie === null) return;
+
+    if (saisie.trim() === "") {
+        alert("Veuillez saisir un rendement réel.");
+        return;
+    }
+
+    const rendement = Number(saisie);
+
+    if (
+        !Number.isFinite(rendement) ||
+        rendement < 0
+    ) {
+        alert("Le rendement doit être positif ou nul.");
+        return;
+    }
+
+    try {
+
+        const reponse = await fetch(
+            "/api/observations/" + id + "/rendement-reel",
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    rendement_reel: rendement
+                })
+            }
+        );
+
+        const resultat = await reponse.json();
+
+        if (!reponse.ok) {
+            throw new Error(
+                typeof resultat.detail === "string"
+                    ? resultat.detail
+                    : "Impossible d'enregistrer le rendement."
+            );
+        }
+
+        alert("Rendement réel enregistré dans MariaDB.");
+
+        await chargerHistorique();
+
+    } catch (erreur) {
+        alert(erreur.message);
+    }
+}
+
+
+// ==========================================
+// EXPORTER L'HISTORIQUE EN CSV
+// ==========================================
+
+function telechargerCSV() {
+
+    if (historiqueActuel.length === 0) {
+        alert("Aucune donnée à exporter.");
+        return;
+    }
+
+    const entetes = [
+        "Observation_ID",
+        "Prediction_ID",
+        "Date",
+        "Crop",
+        "Season",
+        "State",
+        "Crop_Year",
+        "Area",
+        "Annual_Rainfall",
+        "Fertilizer",
+        "Pesticide",
+        "Rendement_predit",
+        "Rendement_reel",
+        "Version"
+    ];
+
+    const lignes = historiqueActuel.map(item => {
+
+        const o = item.observation;
+        const p = item.prediction;
+
+        return [
+            o.id,
+            p.id,
+            o.date_observation,
+            o.Crop,
+            o.Season,
+            o.State,
+            o.Crop_Year,
+            o.Area,
+            o.Annual_Rainfall,
+            o.Fertilizer,
+            o.Pesticide,
+            p.rendement_predit,
+            o.rendement_reel,
+            nomVersion(item.modele)
+        ];
+    });
+
+    const echapper = valeur => {
+
+        const texte = valeur === null ||
+                      valeur === undefined
+            ? ""
+            : String(valeur);
+
+        return '"' + texte.replaceAll('"', '""') + '"';
+    };
+
+    const csv = [entetes, ...lignes]
+        .map(ligne => ligne.map(echapper).join(","))
+        .join("\r\n");
+
+    const blob = new Blob(
+        ["\uFEFF" + csv],
+        {type: "text/csv;charset=utf-8"}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement("a");
+
+    lien.href = url;
+    lien.download = "historique_agriyield.csv";
+
+    document.body.appendChild(lien);
+    lien.click();
+    lien.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+
+// ==========================================
+// EVENEMENTS
+// ==========================================
+
+$("btn-filtrer").addEventListener(
+    "click",
+    chargerHistorique
+);
+
+$("btn-reinitialiser").addEventListener(
+    "click",
+    () => {
+        $("date-debut").value = "";
+        $("date-fin").value = "";
+        $("filtre-modele").value = "";
+        chargerHistorique();
+    }
+);
+
+$("btn-export").addEventListener(
+    "click",
+    telechargerCSV
+);
+
+$("btn-fermer-dialog").addEventListener(
+    "click",
+    () => $("historique-dialog").close()
+);
+
+chargerHistorique();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+
+/* ==========================================
+   AGRIYIELD MLOPS - PAGE DE BIENVENUE
+========================================== */
+
+/* ==========================================
+   REINITIALISATION
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+/* ==========================================
+   IMAGE DE BIENVENUE
+========================================== */
+
+body.page-bienvenue {
+    width: 100%;
+    min-height: 100vh;
+
+    background-image: url("/static/images/bienvenue.jpg");
+
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    background-color: #f4f9f5;
+    font-family: Arial, sans-serif;
+}
+
+/* ==========================================
+   POSITION DU BOUTON
+========================================== */
+
+.bienvenue-contenu {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    /* Bouton remonté légèrement */
+    padding: 0 20px 11vh;
+}
+
+/* ==========================================
+   BOUTON VERT MODERNE - SANS EFFET 3D
+========================================== */
+
+.bouton-commencer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    padding: 14px 26px;
+
+    background: #138a45;
+
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border: 1px solid #138a45;
+    border-radius: 50px;
+
+    /* Ombre légère sans relief 3D */
+    box-shadow: 0 4px 12px rgba(19, 138, 69, 0.15);
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* ==========================================
+   ANIMATION AU SURVOL
+========================================== */
+
+.bouton-commencer:hover {
+    background: #08742e;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 16px rgba(19, 138, 69, 0.20);
+}
+
+/* ==========================================
+   EFFET LORS DU CLIC
+========================================== */
+
+.bouton-commencer:active {
+    transform: translateY(0);
+
+    box-shadow: 0 2px 6px rgba(19, 138, 69, 0.12);
+}
+
+/* ==========================================
+   ICONE CIRCULAIRE
+========================================== */
+
+.icone-bouton {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 22px;
+    height: 22px;
+
+    background: #ffffff;
+    color: #138a45;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   FLECHE ANIMEE
+========================================== */
+
+.fleche-bouton {
+    font-size: 18px;
+    transition: transform 0.25s ease;
+}
+
+.bouton-commencer:hover .fleche-bouton {
+    transform: translateX(5px);
+}
+
+/* ==========================================
+   RESPONSIVE - TABLETTES
+========================================== */
+
+@media (max-width: 950px) {
+
+    body.page-bienvenue {
+        background-size: contain;
+    }
+
+    .bienvenue-contenu {
+        padding: 0 15px 10vh;
+    }
+
+    .bouton-commencer {
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE - TELEPHONES
+========================================== */
+
+@media (max-width: 600px) {
+
+    body.page-bienvenue {
+        background-size: contain;
+    }
+
+    .bienvenue-contenu {
+        padding: 0 12px 9vh;
+    }
+
+    .bouton-commencer {
+        font-size: 13px;
+        padding: 11px 16px;
+        gap: 7px;
+    }
+
+    .icone-bouton {
+        width: 20px;
+        height: 20px;
+        font-size: 13px;
+    }
+
+    .fleche-bouton {
+        font-size: 16px;
+    }
+}
